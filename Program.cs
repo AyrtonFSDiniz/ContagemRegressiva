@@ -15,18 +15,30 @@ static void Menu() {
     Console.WriteLine("");
     Console.WriteLine("Quanto tempo deseja contar?");
 
+   try {
    string data = Console.ReadLine().ToLower();
    char type = char.Parse(data.Substring(data.Length-1, 1));
    int time = int.Parse(data.Substring(0,data.Length -1));
    int multiplier = 1;
 
-    if (type == 'm')
+    if (type == 'm') {
         multiplier = 60;
-
-    if (time == 0)
-    System.Environment.Exit(0);
+    } else if (type == 's') {
+        PreStart(time * multiplier);
+    } else if (time == 0) {
+        System.Environment.Exit(0);   
+    } else {
+       throw new Exception();
+    }
+    
 
     PreStart(time * multiplier);
+
+   } catch (Exception err){
+       Console.WriteLine("Erro ao informar o tempo. Refaça a operação.");
+       Console.WriteLine(err.Message);
+       Console.WriteLine(err.InnerException);
+   }
 }
 
 static void PreStart(int time) {
